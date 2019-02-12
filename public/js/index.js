@@ -36,23 +36,40 @@ var config = {
       $("#logout_bt").hide();
       $("#user_email").html('');
     }
+    init();
   });
   
-/** Database **/
-init();  
+/** Database **/ 
 function init() {
+  $(".jbooks").empty();
   ref = db.ref("root/jbook");
   ref.on("child_added", onAdded);
 }
 function onAdded(data){
   var k = data.key;
   var v = data.val();
+  var d = new Date(v.wdate);
+  var month = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+  var date = String(d.getFullYear())+"년 "+month[d.getMonth()]+" "+String(d.getDate())+"일 "+zeroAdd(d.getHours())+":"+zeroAdd(d.getMinutes())+":"+zeroAdd(d.getSeconds());
+  var icon = "";
+  if(user){
+    if(user.uid==v.uid) {
+      icon += '<i onclick="onUpdate(this);" class="fas fa-edit"></i>';
+      icon += '<i onclick="onDelete(this);" class="fas fa-trash"></i>';
+    }
+  }
+  
   var html = '<ul id="'+k+'" data-uid="'+v.uid+'" class="jbook">';
-  html += '<li>'+v.uname+' ('+v.email+')</li>';
+  html += '<li>'+v.uname+' ('+v.email+') | '+date+'</li>';
   html += '<li>'+v.content+'</li>';
-  html += '<li>'+v.wdate+'</li>';
+  html += '<li>'+icon+'</li>';
   html += '</ul>';
   $(".jbooks").prepend(html);
+}
+
+function zeroAdd(n) {
+  if(n<10) return "0"+n;
+  else return n;
 }
 
 $("#save_bt").on("click",function(){
