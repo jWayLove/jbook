@@ -8,7 +8,7 @@ var config = {
   };
   firebase.initializeApp(config);
 
-/** 전역 변수 설정 **/
+/** local variables **/
   var log = console.log;
   var auth = firebase.auth();
   var db = firebase.database();
@@ -47,13 +47,12 @@ function init() {
   ref = db.ref("root/jbook");
   ref.on("child_added", onAdd);
   ref.on("child_removed", onRev);
+  ref.on("child_changed", onChg);
 }
 function onAdd(data){
   var k = data.key;
   var v = data.val();
-  var d = new Date(v.wdate);
-  var month = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
-  var date = String(d.getFullYear())+"년 "+month[d.getMonth()]+" "+String(d.getDate())+"일 "+zeroAdd(d.getHours())+":"+zeroAdd(d.getMinutes())+":"+zeroAdd(d.getSeconds());
+  var d = showDate(v.wdate);
   var icon = "";
   if(user){
     if(user.uid==v.uid) {
@@ -63,7 +62,7 @@ function onAdd(data){
   }
   
   var html = '<ul id="'+k+'" data-uid="'+v.uid+'" class="jbook">';
-  html += '<li>'+v.uname+' ('+v.email+') | '+date+'</li>';
+  html += '<li>'+v.uname+' ('+v.email+') | <span>'+d+'</span></li>';
   html += '<li>'+v.content+'</li>';
   html += '<li>'+icon+'</li>';
   html += '</ul>';
@@ -75,9 +74,23 @@ function onRev(data) {
   $("#"+k).remove();
 }
 
+function onChg(data) {
+  var k = data.key;
+  var v = data.val();
+  $("#"+k).children("li").eq(0).children("span").html(showDate(v.wdate));
+  $("#"+k).children("li").eq(1).html(v.content);
+}
+
 function zeroAdd(n) {
   if(n<10) return "0"+n;
   else return n;
+}
+
+function showDate(timestamp) {
+  var d = new Date(timestamp);
+  var month = ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"];
+  var date = String(d.getFullYear())+"년 "+month[d.getMonth()]+" "+String(d.getDate())+"일 "+zeroAdd(d.getHours())+":"+zeroAdd(d.getMinutes())+":"+zeroAdd(d.getSeconds());
+  return date;
 }
 
 $("#save_bt").on("click",function(){
@@ -107,7 +120,15 @@ function onUpdate(obj) {
   html += '<button type="button" class="w3-button w3-black" style="margin-top:-4px;" onclick="doCancel(this, \''+v+'\');">Cancel</button>';
   $target.html(html);
 }
-
+function doUpdate(obj) {
+  var $input = $(obj).prev();
+  var content = $input.val();
+  key = $(obj).parent().parent().attr("id");
+  ref = db.ref("root/jbook/"+key).update({
+    content: content,
+    wdate: Date.now()
+  });
+}
 function doCancel(obj, val) {
   var $target = $(obj).parent().html(val);
 }
