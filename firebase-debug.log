@@ -23,3 +23,32 @@
 [debug] [2019-02-12T05:25:00.474Z] <<< HTTP RESPONSE 200
 [info] i  hosting: Serving hosting files from: public
 [info] +  hosting: Local server: http://localhost:5000
+[debug] [2019-02-12T06:31:51.862Z] ----------------------------------------------------------------------
+[debug] [2019-02-12T06:31:51.862Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\JAY.LEE\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2019-02-12T06:31:51.862Z] CLI Version:   6.3.1
+[debug] [2019-02-12T06:31:51.862Z] Platform:      win32
+[debug] [2019-02-12T06:31:51.862Z] Node Version:  v8.12.0
+[debug] [2019-02-12T06:31:51.862Z] Time:          Tue Feb 12 2019 15:31:51 GMT+0900 (Korea Standard Time)
+[debug] [2019-02-12T06:31:51.862Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2019-02-12T06:31:51.878Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2019-02-12T06:31:51.878Z] > authorizing via signed-in user
+[debug] [2019-02-12T06:31:51.878Z] [iam] checking project jay-book for permissions ["firebase.projects.get"]
+[debug] [2019-02-12T06:31:51.878Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2019-02-12T06:31:51.878Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2019-02-12T06:31:52.248Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-12T06:31:52.263Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/jay-book:testIamPermissions  
+
+[debug] [2019-02-12T06:31:53.473Z] <<< HTTP RESPONSE 200
+[debug] [2019-02-12T06:31:53.473Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/jay-book  
+ 
+[debug] [2019-02-12T06:31:54.629Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from 'C:\Users\JAY.LEE\jbook'...
+[info] 
+[debug] [2019-02-12T06:31:54.629Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/740434210124/clients/_:getWebAppConfig  
+ 
+[debug] [2019-02-12T06:31:55.255Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] +  hosting: Local server: http://localhost:5000

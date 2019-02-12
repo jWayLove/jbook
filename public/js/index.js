@@ -8,12 +8,14 @@ var config = {
   };
   firebase.initializeApp(config);
 
+/** 전역 변수 설정 **/
   var log = console.log;
   var auth = firebase.auth();
   var db = firebase.database();
   var googleAuth = new firebase.auth.GoogleAuthProvider();
   var ref = null;
   var user = null;
+  var key = null;
 
   $("#login_bt").on("click", function(){
     auth.signInWithPopup(googleAuth);
@@ -43,9 +45,10 @@ var config = {
 function init() {
   $(".jbooks").empty();
   ref = db.ref("root/jbook");
-  ref.on("child_added", onAdded);
+  ref.on("child_added", onAdd);
+  ref.on("child_removed", onRev);
 }
-function onAdded(data){
+function onAdd(data){
   var k = data.key;
   var v = data.val();
   var d = new Date(v.wdate);
@@ -65,6 +68,11 @@ function onAdded(data){
   html += '<li>'+icon+'</li>';
   html += '</ul>';
   $(".jbooks").prepend(html);
+}
+
+function onRev(data) {
+  var k = data.key;
+  $("#"+k).remove();
 }
 
 function zeroAdd(n) {
@@ -89,3 +97,14 @@ $("#save_bt").on("click",function(){
     $content.val('');
   }
 })
+
+function onUpdate() {
+
+}
+
+function onDelete(obj) {
+  key = $(obj).parent().parent().attr("id");
+  if(confirm("Do you really want to delete the data?")){
+    db.ref("root/jbook/"+key).remove();
+  }
+}
