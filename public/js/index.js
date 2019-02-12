@@ -45,6 +45,7 @@ var config = {
 function init() {
   $(".jbooks").empty();
   ref = db.ref("root/jbook");
+  ref.off();
   ref.on("child_added", onAdd);
   ref.on("child_removed", onRev);
   ref.on("child_changed", onChg);
