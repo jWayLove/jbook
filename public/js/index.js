@@ -55,7 +55,7 @@ function onAdd(data){
   var v = data.val();
   var d = showDate(v.wdate);
   var icon = "";
-  if(user){
+  if(user){ 
     if(user.uid==v.uid) {
       icon += '<i onclick="onUpdate(this);" class="fas fa-edit"></i>';
       icon += '<i onclick="onDelete(this);" class="fas fa-trash"></i>';
